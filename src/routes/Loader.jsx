@@ -11,7 +11,7 @@ const Loader = () => {
         width: "100%",
       }}
     >
-      <Progress percent={100} status="active" showInfo type="line" />
+      <Progress percent={100} status="active" showInfo={false} type="line" />
     </div>
   );
 };

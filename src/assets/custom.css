@@ -10,7 +10,6 @@
   margin-top: 60px;
 }
 .site-layout .site-layout-background {
-  padding: 20px;
   height: calc(100vh - 120px);
   border: 1px solid #ddd;
 }
