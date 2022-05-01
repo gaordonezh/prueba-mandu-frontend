@@ -14,7 +14,7 @@ const useDivisions = () => {
     try {
       setLoading(true);
       const res = await getDivisions();
-      setDivisions([...res.data]);
+      setDivisions([...res.data.reverse()]);
     } catch (error) {
       notification["error"]({ message: `Ocurrió un error al obtener las divisiones.` });
     } finally {
