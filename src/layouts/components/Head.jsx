@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Layout, Menu } from "antd";
 import { AiFillCaretDown, AiFillQuestionCircle } from "react-icons/ai";
 import { BsFillBriefcaseFill } from "react-icons/bs";
@@ -47,7 +47,7 @@ const Head = () => {
         display: "flex",
       }}
     >
-      <img className="logo" src="./images/mandu.png" />
+      <img className="logo" src="./images/mandu.png" alt="logo mandu start" />
       <Menu
         style={{ background: "transparent" }}
         theme="dark"
@@ -62,7 +62,7 @@ const Head = () => {
         mode="horizontal"
         items={itemsRight}
       />
-      <img className="logo" src="./images/mandu.png" />
+      <img className="logo" src="./images/mandu.png" alt="Logo mandu end" />
     </Header>
   );
 };
