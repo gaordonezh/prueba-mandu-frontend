@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Table, Button, Space, Input, Tooltip, Avatar } from "antd";
 import { FaSearch } from "react-icons/fa";
 import { GrAdd } from "react-icons/gr";
@@ -7,7 +7,7 @@ import { RiEdit2Fill } from "react-icons/ri";
 import { AiFillDelete } from "react-icons/ai";
 import { CgAssign } from "react-icons/cg";
 
-const TableDivisions = ({ data, loading, setModal, setDel, setSub, setTop }) => {
+const TableDivisions = ({ data, loading, setModal, setDel, setSub, setTop, setColumns, total }) => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const inputRef = useRef(null);
@@ -16,7 +16,7 @@ const TableDivisions = ({ data, loading, setModal, setDel, setSub, setTop }) => 
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
       <Space direction="vertical" size="small" style={{ padding: 10 }}>
         <Input
-          placeholder={`Search ${dataIndex}`}
+          placeholder={`Buscar`}
           value={selectedKeys[0]}
           ref={inputRef}
           onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
@@ -26,7 +26,9 @@ const TableDivisions = ({ data, loading, setModal, setDel, setSub, setTop }) => 
           <Button type="primary" onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}>
             BUSCAR
           </Button>
-          <Button onClick={() => handleReset(clearFilters, confirm)}>CANCELAR</Button>
+          <Button onClick={() => handleReset(clearFilters, confirm, setSelectedKeys)}>
+            CANCELAR
+          </Button>
         </Button.Group>
       </Space>
     ),
@@ -61,10 +63,11 @@ const TableDivisions = ({ data, loading, setModal, setDel, setSub, setTop }) => 
     setSearchedColumn(dataIndex);
   };
 
-  const handleReset = (clearFilters, confirm) => {
-    confirm({ closeDropdown: true });
+  const handleReset = (clearFilters, confirm, setSelectedKeys) => {
     clearFilters();
+    confirm({ closeDropdown: true });
     setSearchText("");
+    setSelectedKeys([""]);
   };
 
   const columns = [
@@ -124,8 +127,8 @@ const TableDivisions = ({ data, loading, setModal, setDel, setSub, setTop }) => 
           <Avatar.Group maxCount={4}>
             <Tooltip title="Agregar Subdivisión">
               <Avatar
-                style={{ background: "#1890ff", cursor: "pointer" }}
-                icon={<GrAdd />}
+                style={{ background: "#49C5A9", cursor: "pointer" }}
+                icon={<GrAdd style={{ color: "#fff" }} />}
                 onClick={() => setSub({ isOpen: true, data: row })}
               />
             </Tooltip>
@@ -172,7 +175,16 @@ const TableDivisions = ({ data, loading, setModal, setDel, setSub, setTop }) => 
 
   const handleChange = (pagination, filters, sorter) => {
     //console.log(pagination, filters, sorter);
+    // Pendiente: AQUÍ IRÁ LA BUSQUEDA POR COLUMNAS
   };
+
+  useEffect(() => {
+    const result = columns
+      .filter((item) => item.dataIndex !== "id")
+      .map((item) => ({ label: item.title, key: item.dataIndex }));
+    setColumns([...result]);
+    // eslint-disable-next-line
+  }, [columns]);
 
   return (
     <Table
@@ -184,6 +196,7 @@ const TableDivisions = ({ data, loading, setModal, setDel, setSub, setTop }) => 
       rowKey="id"
       scroll={{ x: "100%" }}
       bordered
+      footer={() => `Total colaboradores: ${total}`}
     />
   );
 };

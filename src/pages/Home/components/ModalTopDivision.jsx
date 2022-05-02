@@ -23,7 +23,6 @@ const ModalTopDivision = ({ isOpen, setOpen, data, edit, refreshFunction, allDiv
       notification["success"]({ message: `La subdivisión se agregó correctamente.` });
       handleCancel();
     } catch (error) {
-      console.log(error);
       notification["error"]({ message: `Ocurrió un error al realizar la operación` });
     } finally {
       setLoading(false);
